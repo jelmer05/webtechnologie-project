@@ -3,3 +3,62 @@
 
 @source "../../templates/**/*.html";
 @source "../../app.py";
+
+@theme {
+  /* This is for Tailwind v4.0+ */
+  --color-lichtGeel: #fef3e2;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+body {
+  font-family: Poppins;
+  line-height: 193%;
+  /* 34.74px */
+}
+
+h1,
+h2,
+h3 {
+  color: var(--font, #3a2d32);
+  font-family: "Playfair Display";
+  font-style: normal;
+  font-weight: 700;
+  line-height: 115%;
+  /* 97.75px */
+}
+
+h1 {
+  font-size: 85px;
+}
+
+h2 {
+  font-size: 46px;
+}
+
+p {
+  font-size: 22px;
+}
+
+button.button-stroke {
+  display: flex;
+  width: 185px;
+  height: 56px;
+  padding: 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border: 2px solid #221e42;
+}
+
+button.button {
+  background: #221e42;
+  color: white;
+  display: flex;
+  width: 185px;
+  height: 56px;
+  padding: 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}

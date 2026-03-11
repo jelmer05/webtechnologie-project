@@ -1,5 +1,12 @@
-from flask import Flask, render_template 
+import sqlite3
+from flask import Flask, render_template, g
 app = Flask(__name__)
+
+def get_db():
+    """get database contenction"""
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite3.connect(DATABASE)
 
 @app.route('/')
 def index():
