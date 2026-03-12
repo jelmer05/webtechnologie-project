@@ -40,6 +40,10 @@ p {
   font-size: 22px;
 }
 
+button {
+  transition: all 0.3s;
+}
+
 button.button-stroke {
   display: flex;
   width: 185px;
@@ -61,4 +65,14 @@ button.button {
   justify-content: center;
   align-items: center;
   gap: 8px;
+}
+
+button.button:hover {
+  background: #ff7a00;
+}
+
+button.button-stroke:hover {
+  background: #221e42;
+  color: white;
+  opacity: 90%;
 }
