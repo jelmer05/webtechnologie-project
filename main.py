@@ -1,1 +1,0 @@
-class User(self, naam, )
