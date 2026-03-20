@@ -1,14 +1,24 @@
-from webtech import db
+from webtech import db, login_manager
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
+
 class User(db.Model):
 
-    __tablename__ = 'user'
+    __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key = True)
-    naam= db.Column(db.Text)
+    email = db.Column(db.String(64), unique=True, index=True)
+    username = db.Column(db.String(64), unique=True, index=True)
+    password_hash = db.Column(db.String(128))
+    def __init__(self, email, username, password):
+        self.email = email
+        self.username = username
+        self.password = generate_password_hash(password)
 
-    def __init__(self,naam):
-        self.naam = naam
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
-    def __repr__(self):
-        return f"Naam van User: {self.naam}"
 
-db.create_all()

@@ -1,9 +1,9 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block content %}
-{% if person %}
-<h1>Hello {{ person }}!</h1>
-{% else %}
-<h1>Hello, World!</h1>
-{% endif %}
-  {% endblock %}
-
+<form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.email.label }} {{ form.email() }}
+    {{ form.password.label }} {{ form.password() }}
+    {{ form.submit() }}
+</form>
+{% endblock %}

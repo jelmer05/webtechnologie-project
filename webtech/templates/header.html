@@ -1,13 +1,13 @@
 <header class="h-auto w-screen py-5">
-  <nav class="flex  gap-5 w-full">
+  <nav class="flex gap-5 w-full">
     <ul class="flex gap-5 w-full justify-center items-center">
-    <li class="">home</li>
-    <li class="">Login</li>
-    <li class="">jelmert</li>
-    <li class="">jelmert</li>
-
-      
+      <li class="">home</li>
+      {%if current_user.is_authenticated %}
+      <li><a href="{{url_for('logout')}}">Uitloggen</a></li>
+      {% else %}
+      <li><a href="{{url_for('login')}}">Inloggen</a></li>
+      <li><a href="{{url_for('register')}}">Registreren</a></li>
+      {%endif%}
     </ul>
-    </nav>
+  </nav>
 </header>
-

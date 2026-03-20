@@ -4,7 +4,11 @@
     <section class='header min-h-[300px] lg:min-h-150 flex bg-lichtGeel flex-col lg:flex-row gap-5'>
         <div class="left md:w-1/2 lg:w-2/3 flex gap-16.25  p-12 justify-center flex-col">
             <div class="title-box flex flex-col gap-5">
+                 {% if current_user.is_authenticated %}
+                <p>Beste {{current_user.username}}</p>
+                {%else%}
                 <p>Beste van de buurt</p>
+                {%endif%}
                 <h1>
                     Bungalowpark
                     Zee en Duin
