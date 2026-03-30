@@ -13,6 +13,8 @@ class User(db.Model, UserMixin) :
     email = db.Column(db.String(64), unique=True, index=True)
     username = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
+    boekingen_id = db.relationship('Boeking', backref='user', uselist=False) 
+
     def __init__(self, email, username, password):
         self.email = email
         self.username = username
@@ -20,5 +22,33 @@ class User(db.Model, UserMixin) :
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+class Boeking(db.Model):
+    __tablename__ = 'boekingen'
+    id = db.Column(db.Integer, primary_key =True)
+    gast_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    huis_id = db.Column(db.Integer, db.ForeignKey('huisjes.id'))
+    weeknummer = db.Column(db.Integer, index = True)
+    
+    def __init__(self, gast_id, huis_id, weeknummer) -> None:
+        self.gast_id = gast_id
+        self.huis_id = huis_id
+        self.weeknummer = weeknummer
+        
+    
+
+class Huisje(db.Model):
+
+    __tablename__ = 'huisjes'
+    id = db.Column(db.Integer, primary_key = True)
+    personen = db.Column(db.Integer, index = True)
+    weekprijs = db.Column(db.Float, index=True)
+    beschrijving = db.Column(db.Text)
+    boeking_id = db.relationship('Boeking', backref='huis', uselist=False)
+
+    def __init__(self,  personen, weekprijs) -> None:
+        self.personen = personen
+        self.weekprijs = weekprijs
+
 
 
