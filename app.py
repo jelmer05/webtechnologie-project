@@ -28,6 +28,7 @@ def logout():
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     form = LoginFrom()
+    print(form)
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user.check_password(form.password.data) and user is not None:
@@ -52,6 +53,13 @@ def register():
         flash("dank voor registratie, je kan nu inloggen")
         return redirect(url_for('login'))
     return render_template('register.html', form=form)
+
+@app.route('/check_db', methods=['GET'])
+def check_db():
+    users = User.query.all()
+    return render_template("toon_users.html", users=users) 
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
