@@ -46,9 +46,11 @@ class Huisje(db.Model):
     beschrijving = db.Column(db.Text)
     boeking_id = db.relationship('Boeking', backref='huis', uselist=False)
 
-    def __init__(self,  personen, weekprijs) -> None:
+    def __init__(self,  personen, weekprijs, beschrijving) -> None:
         self.personen = personen
         self.weekprijs = weekprijs
+        self.beschrijving = beschrijving
 
+        
 
 
