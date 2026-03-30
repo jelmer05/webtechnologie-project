@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired, Email, EqualTo
+from wtforms import StringField, PasswordField, SubmitField,IntegerField, validators
+from wtforms.validators import DataRequired,NumberRange, Email, EqualTo  
 from wtforms import ValidationError
 from webtech.models import User
 
@@ -24,4 +24,7 @@ class LoginFrom(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Inloggen')
 
+class FilterWeekForm(FlaskForm):
+    weeknummer = IntegerField('weeknummer', validators=[DataRequired(), NumberRange(min=1, max=52) ])
+    submit = SubmitField('Filter')
     

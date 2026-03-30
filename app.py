@@ -2,7 +2,7 @@ from webtech import app, db
 from flask import Flask, render_template, url_for, redirect, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from webtech.models import User, Huisje, Boeking
-from webtech.form import RegistrationForm,LoginFrom
+from webtech.form import RegistrationForm,LoginFrom, FilterWeekForm
 from flask_migrate import Migrate
 from flask_login import login_user, login_required, logout_user
 
@@ -11,12 +11,17 @@ from flask_login import login_user, login_required, logout_user
 def indexRoute():
     return render_template('index.html')
 
-@app.route("/dashboard")
+@app.route("/dashboard", methods=['GET', 'POST'])
 @login_required
 def dashboard():
     users = User.query.all()
     huizen = Huisje.query.all() 
-    return render_template("dashboard.html", user=users , huizen=huizen) 
+    form = FilterWeekForm()
+    weeknummer =  1
+    if form.validate_on_submit():
+        weeknummer = form.weeknummer.data
+
+    return render_template("dashboard.html", user=users, form=form , huizen=huizen, weeknummer=weeknummer) 
 
 @app.route("/logout")
 @login_required
@@ -29,7 +34,6 @@ def logout():
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     form = LoginFrom()
-    print(form)
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user.check_password(form.password.data) and user is not None:

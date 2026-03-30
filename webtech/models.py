@@ -45,7 +45,7 @@ class Huisje(db.Model):
     weekprijs = db.Column(db.Float, index=True)
     beschrijving = db.Column(db.Text)
     afbeelding = db.Column(db.Text)
-    boeking_id = db.relationship('Boeking', backref='huis', uselist=False)
+    boeking_id = db.relationship('Boeking', backref='huis')
 
     def __init__(self,  personen, weekprijs, beschrijving,afbeelding) -> None:
         self.personen = personen
