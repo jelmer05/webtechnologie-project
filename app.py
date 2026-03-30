@@ -15,7 +15,7 @@ def indexRoute():
 @login_required
 def dashboard():
     users = User.query.all()
-    return render_template("toon_users.html", users=users) 
+    return render_template("dashboard.html", user=users) 
 
 @app.route("/logout")
 @login_required
