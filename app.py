@@ -1,7 +1,7 @@
 from webtech import app, db
 from flask import Flask, render_template, url_for, redirect, flash, request
 from flask_sqlalchemy import SQLAlchemy
-from webtech.models import User
+from webtech.models import User, Huisje, Boeking
 from webtech.form import RegistrationForm,LoginFrom
 from flask_migrate import Migrate
 from flask_login import login_user, login_required, logout_user
@@ -15,7 +15,8 @@ def indexRoute():
 @login_required
 def dashboard():
     users = User.query.all()
-    return render_template("dashboard.html", user=users) 
+    huizen = Huisje.query.all() 
+    return render_template("dashboard.html", user=users , huizen=huizen) 
 
 @app.route("/logout")
 @login_required

@@ -8,80 +8,39 @@
 
             <div class="flex-1 overflow-y-auto p-6">
                 
-                <h1 class="text-2xl font-bold text-gray-900 mb-6">Dashboard Overview</h1>
-          <h2 class="pb-5">Welkom, {{current_user.username}}</h2>
+          <h2 class="pb-5">Welkom {{current_user.username}}, </h2>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
-                        <div class="flex items-center justify-between">
-                            <h3 class="text-sm font-medium text-gray-500">Total Revenue</h3>
-                            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        </div>
-                        <p class="text-3xl font-bold text-gray-900 mt-2">$45,231</p>
-                        <p class="text-sm text-green-600 mt-2 font-medium">+20.1% from last month</p>
-                    </div>
-
-                    <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
-                        <div class="flex items-center justify-between">
-                            <h3 class="text-sm font-medium text-gray-500">Active Users</h3>
-                            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                        </div>
-                        <p class="text-3xl font-bold text-gray-900 mt-2">2,405</p>
-                        <p class="text-sm text-green-600 mt-2 font-medium">+10.5% from last month</p>
-                    </div>
-
-                    <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
-                        <div class="flex items-center justify-between">
-                            <h3 class="text-sm font-medium text-gray-500">New Orders</h3>
-                            <svg class="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-                        </div>
-                        <p class="text-3xl font-bold text-gray-900 mt-2">1,210</p>
-                        <p class="text-sm text-red-500 mt-2 font-medium">-2.4% from last month</p>
-                    </div>
-
-                    <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
-                        <div class="flex items-center justify-between">
-                            <h3 class="text-sm font-medium text-gray-500">Bounce Rate</h3>
-                            <svg class="w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
-                        </div>
-                        <p class="text-3xl font-bold text-gray-900 mt-2">42.3%</p>
-                        <p class="text-sm text-green-600 mt-2 font-medium">+5.2% from last month</p>
-                    </div>
-                </div>
-<div class="bg-white rounded-lg border border-gray-200 shadow-sm">
-    <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-        <h2 class="text-lg font-medium text-gray-900">Accommodaties</h2>
+<div class="">
+    <div class="px-6 py-4  flex justify-between items-center">
+                        <h2 class="text-lg font-medium text-gray-900">Accommodaties ({{huizen|length}})</h2>
         <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Beheer alle huizen</a>
     </div>
     <div class="p-6">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            
+            {%for huis in huizen%} 
             <div class="group border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition-shadow">
                 <div class="aspect-video bg-gray-100 flex items-center justify-center relative">
-                    <svg class="w-12 h-12 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-                    </svg>
-                    <div class="absolute top-3 right-3 bg-white/90 px-2 py-1 rounded text-xs font-bold shadow-sm">
-                        €125 /nacht
+                                    <img class="max-h-[400px] object-cover  w-full" src="{{huis.afbeelding}}">
+                   <div class="absolute top-3 right-3 bg-white/90 px-2 py-1 rounded text-xs font-bold shadow-sm">
+                                        €{{huis.weekprijs}} /week
+                                        
                     </div>
                 </div>
 
                 <div class="p-4">
                     <div class="flex justify-between items-start mb-2">
-                        <h3 class="font-bold text-gray-900">Villa de Duinen</h3>
+                                        <h3 class="font-bold text-gray-900">{{huis.beschrijving}}</h3>
                         <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
                             Beschikbaar
                         </span>
                     </div>
                     <p class="text-sm text-gray-500 flex items-center mb-4">
                         <svg class="w-4 h-4 mr-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                        Texel, Nederland
+aantal personen                                        {{huis.personen}}
                     </p>
-                    <button class="w-full py-2 bg-gray-50 text-gray-700 text-sm font-medium rounded-lg border border-gray-200 hover:bg-gray-100 transition-colors">
-                        Details bekijken
-                    </button>
-                </div>
+                 </div>
             </div>
+            {%endfor%}
             </div>
     </div>
 </div>
