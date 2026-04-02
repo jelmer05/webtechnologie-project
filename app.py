@@ -5,6 +5,7 @@ from webtech.models import User, Huisje, Boeking
 from webtech.form import RegistrationForm,LoginFrom, FilterWeekForm
 from flask_migrate import Migrate
 from flask_login import login_user, login_required, logout_user
+from datetime import datetime
 
 
 @app.route("/")
@@ -22,6 +23,17 @@ def dashboard():
         weeknummer = form.weeknummer.data
 
     return render_template("dashboard.html", user=users, form=form , huizen=huizen, weeknummer=weeknummer) 
+
+@app.route("/boeken/<huisId>", methods=['GET'])
+def boeken(huisId):
+    form = RegistrationForm()
+    huis = Huisje.query.filter_by(id=huisId).first()
+    
+    now = datetime.now()
+    current_week = int(now.strftime("%W")) + 1
+    current_year = int(now.strftime("%Y"))
+
+    return render_template("boeken.html", form=form, huis=huis, current_year = current_year, current_week=current_week)
 
 @app.route("/logout")
 @login_required
