@@ -2,7 +2,7 @@ from webtech import app, db
 from flask import Flask, render_template, url_for, redirect, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from webtech.models import User, Huisje, Boeking
-from webtech.form import RegistrationForm,LoginFrom, FilterWeekForm
+from webtech.form import RegistrationForm,LoginFrom, FilterWeekForm, BoekingForm
 from flask_migrate import Migrate
 from flask_login import login_user, login_required, logout_user
 from datetime import datetime
@@ -27,6 +27,7 @@ def dashboard():
 @app.route("/boeken/<huisId>", methods=['GET'])
 def boeken(huisId):
     form = RegistrationForm()
+    boeking_Form = BoekingForm()
     huis = Huisje.query.filter_by(id=huisId).first()
     volgeboekt_op = [geboekt.weeknummer for geboekt in huis.boeking_id]
     
@@ -34,7 +35,7 @@ def boeken(huisId):
     current_week = int(now.strftime("%W")) + 1
     current_year = int(now.strftime("%Y"))
 
-    return render_template("boeken.html", form=form, volgeboekt_op=volgeboekt_op, huis=huis, current_year = current_year, current_week=current_week)
+    return render_template("boeken.html",boeking_Form=boeking_Form, form=form, volgeboekt_op=volgeboekt_op, huis=huis, current_year = current_year, current_week=current_week)
 
 @app.route("/logout")
 @login_required

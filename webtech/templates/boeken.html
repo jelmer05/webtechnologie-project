@@ -1,6 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
-    <section class="bg-white py-8 antialiased md:py-16">
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Find the selected element based on the current_week variable from your backend
+        const currentWeek = {{ current_week }};
+        const selectedCard = document.getElementById(`card-week-${currentWeek}`);
+        const container = document.getElementById('scroll-container');
+
+        if (selectedCard && container) {
+            // Scroll the container so the selected week is in view
+            // 'center' ensures it's not tucked away at the very edge
+            selectedCard.scrollIntoView({
+                behavior: 'auto',
+                inline: 'center',
+                block: 'nearest'
+            });
+        }
+    });
+    </script>
+    <div class="bg-white py-8 antialiased md:py-16">
         <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
             <ol class="items-center flex w-full max-w-2xl text-center text-sm font-medium text-gray-500 sm:text-base">
                 <li class="after:border-1 flex items-center text-primary-700 after:mx-6 after:hidden after:h-1 after:w-full after:border-b after:border-gray-200 sm:after:inline-block sm:after:content-[''] md:w-full xl:after:mx-10">
@@ -113,130 +131,81 @@
                             </div>
                         </div>
                     </div>
-                    <div class="space-y-4">
-                        <h3 class="text-xl font-semibold text-gray-900">Kies een week</h3>
-                        <div id="scroll-container"
-                             class="flex overflow-x-auto gap-4 pb-4 snap-x scroll-smooth">
-                            {% for x in range(1, 53) %}
-                                <div id="card-week-{{ x }}"
-                                     class="w-64 shrink-0 snap-center rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 transition-colors has-[:checked]:border-primary-600 has-[:checked]:bg-primary-50">
-                                    <div class="flex items-start">
-                                        <div class="flex h-5 items-center">
-                                            <input id="week-{{ x }}"
-                                                   type="radio"
-                                                   name="delivery-method"
-                                                   value="{{ x }}"
-                                                   class=" h-4 w-4 border-gray-300 bg-white text-primary-600 focus:ring-2 focus:ring-primary-600"
-                                                   {% if x == current_week %}checked{% endif %} />
-                                        </div>
-                                        <div class="ms-4 text-sm">
-                                            <label for="week-{{ x }}"
-                                                   class="font-medium leading-none text-gray-900 cursor-pointer">
-                                                Week {{ x }}
-                                                {% if x < current_week %}
-                                                    {{ current_year + 1 }}
-                                                {% elif x == current_week %}
-                                                    <p class="text-xs font-bold">Deze week</p>
-                                                {% else %}
-                                                    {{ current_year }}
-                                                {% endif %}
-                                            </label>
-                                            <p class="mt-1 text-xs font-normal text-gray-500">
-                                                {% if x  in volgeboekt_op %}
-                                                    <span class="text-red-600">Vol geboekt</span>
-                                                {% elif x != current_week %}
-                                                    <span class="text-green-500">Beschikbaar</span>
-                                                {% endif %}
-                                                <p>
+                    <form method="POST">
+                        {{ boeking_Form.hidden_tag() }}
+                        <div class="space-y-4">
+                            <h3 class="text-xl font-semibold text-gray-900">Kies een week</h3>
+                            <div id="scroll-container"
+                                 class="flex overflow-x-auto gap-4 pb-4 snap-x scroll-smooth">
+                                {% for x in range(1, 53) %}
+                                    <div id="card-week-{{ x }}"
+                                         class="w-64 shrink-0 snap-center rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 transition-colors has-[:checked]:border-primary-600 has-[:checked]:bg-primary-50">
+                                        <div class="flex items-start">
+                                            <div class="flex h-5 items-center">{{ boeking_Form.weeknummer() }}</div>
+                                            <div class="ms-4 text-sm">
+                                                <label for="week-{{ x }}"
+                                                       class="font-medium leading-none text-gray-900 cursor-pointer">
+                                                    Week {{ x }}
+                                                    {% if x < current_week %}
+                                                        {{ current_year + 1 }}
+                                                    {% elif x == current_week %}
+                                                        <p class="text-xs font-bold">Deze week</p>
+                                                    {% else %}
+                                                        {{ current_year }}
+                                                    {% endif %}
+                                                </label>
+                                                <p class="mt-1 text-xs font-normal text-gray-500">
+                                                    {% if x  in volgeboekt_op %}
+                                                        <span class="text-red-600">Vol geboekt</span>
+                                                    {% elif x != current_week %}
+                                                        <span class="text-green-500">Beschikbaar</span>
+                                                    {% endif %}
+                                                    <p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                                <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Find the selected element based on the current_week variable from your backend
-        const currentWeek = {{ current_week }};
-        const selectedCard = document.getElementById(`card-week-${currentWeek}`);
-        const container = document.getElementById('scroll-container');
-
-        if (selectedCard && container) {
-            // Scroll the container so the selected week is in view
-            // 'center' ensures it's not tucked away at the very edge
-            selectedCard.scrollIntoView({
-                behavior: 'auto',
-                inline: 'center',
-                block: 'nearest'
-            });
-        }
-    });
-                                </script>
-                            </div>
-                            <div>
-                                <label for="voucher" class="mb-2 block text-sm font-medium text-gray-900">
-                                    Enter a gift card, voucher or promotional code
-                                </label>
-                                <div class="flex max-w-md items-center gap-4">
-                                    <input type="text"
-                                           id="voucher"
-                                           class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
-                                           placeholder=""
-                                           required />
-                                    <button type="button"
-                                            class="flex items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
-                                        Apply
-                                    </button>
+                                        {% endfor %}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="mt-6 w-full space-y-6 sm:mt-8 lg:mt-0 lg:max-w-xs xl:max-w-md">
-                            <div class="flow-root">
-                                <div class="-my-3 divide-y divide-gray-200">
-                                    <dl class="flex items-center justify-between gap-4 py-3">
-                                        <dt class="text-base font-normal text-gray-500">Subtotal</dt>
-                                        <dd class="text-base font-medium text-gray-900">
-                                            $8,094.00
-                                        </dd>
-                                    </dl>
-                                    <dl class="flex items-center justify-between gap-4 py-3">
-                                        <dt class="text-base font-normal text-gray-500">Savings</dt>
-                                        <dd class="text-base font-medium text-green-500">
-                                            0
-                                        </dd>
-                                    </dl>
-                                    <dl class="flex items-center justify-between gap-4 py-3">
-                                        <dt class="text-base font-normal text-gray-500">Store Pickup</dt>
-                                        <dd class="text-base font-medium text-gray-900">
-                                            $99
-                                        </dd>
-                                    </dl>
-                                    <dl class="flex items-center justify-between gap-4 py-3">
-                                        <dt class="text-base font-normal text-gray-500">Tax</dt>
-                                        <dd class="text-base font-medium text-gray-900">
-                                            $199
-                                        </dd>
-                                    </dl>
-                                    <dl class="flex items-center justify-between gap-4 py-3">
-                                        <dt class="text-base font-bold text-gray-900">Total</dt>
-                                        <dd class="text-base font-bold text-gray-900">
-                                            $8,392.00
-                                        </dd>
-                                    </dl>
+                            <div class="mt-6 w-full space-y-6 sm:mt-8 lg:mt-0 lg:max-w-xs xl:max-w-md">
+                                <div class="flow-root">
+                                    <div class="-my-3 divide-y divide-gray-200">
+                                        <dl class="flex items-center justify-between gap-4 py-3">
+                                            <dt class="text-base font-normal text-gray-500">Sub Totaal</dt>
+                                            <dd class="text-base font-medium text-gray-900">
+                                                € {{ "%.2f" | format(huis.weekprijs /121 *100) }}
+                                            </dd>
+                                        </dl>
+                                        <dl class="flex items-center justify-between gap-4 py-3">
+                                            <dt class="text-base font-normal text-gray-500">BTW(21%)</dt>
+                                            <dd class="text-base font-medium text-gray-900">
+                                                € {{ "%.2f" | format(huis.weekprijs/121*21) }}
+                                            </dd>
+                                        </dl>
+                                        <dl class="flex items-center justify-between gap-4 py-3">
+                                            <dt class="text-base font-bold text-gray-900">Totaal</dt>
+                                            <dd class="text-base font-bold text-gray-900">
+                                                € {{ huis.weekprijs }}
+                                            </dd>
+                                        </dl>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="space-y-3">
-                                <button type="submit"
-                                        class="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300">
-                                    Proceed to Payment
-                                </button>
-                                <p class="text-sm font-normal text-gray-500">
-                                    One or more items in your cart require an account. <a href="#"
+                                <div class="space-y-3">
+                                    {% if current_user.is_authenticated %}
+                                        <button type="submit"
+                                                class="flex w-full items-center justify-center rounded-lg font-bold bg-blue-500 px-5 py-2.5 text-sm  text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300">
+                                            Boek Nu
+                                        </button>
+                                    {% else %}
+                                        <p class="text-sm font-normal text-gray-500">
+                                            Om te Boeken moet u eerst registreren of inloggen <a href="#"
     title=""
-    class="font-medium text-primary-700 underline hover:no-underline">Sign in or create an account now.</a>.
-                                </p>
+    class="font-medium text-primary-700 underline hover:no-underline">Log nu in</a>.
+                                        </p>
+                                    {% endif %}
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
-                </div>
-            </section>
-        {% endblock %}
+                {% endblock %}
