@@ -126,7 +126,7 @@
                                                    type="radio"
                                                    name="delivery-method"
                                                    value="{{ x }}"
-                                                   class="h-4 w-4 border-gray-300 bg-white text-primary-600 focus:ring-2 focus:ring-primary-600"
+                                                   class=" h-4 w-4 border-gray-300 bg-white text-primary-600 focus:ring-2 focus:ring-primary-600"
                                                    {% if x == current_week %}checked{% endif %} />
                                         </div>
                                         <div class="ms-4 text-sm">
@@ -141,13 +141,19 @@
                                                     {{ current_year }}
                                                 {% endif %}
                                             </label>
-                                            <p class="mt-1 text-xs font-normal text-gray-500">Scheduled Delivery</p>
+                                            <p class="mt-1 text-xs font-normal text-gray-500">
+                                                {% if x  in volgeboekt_op %}
+                                                    <span class="text-red-600">Vol geboekt</span>
+                                                {% elif x != current_week %}
+                                                    <span class="text-green-500">Beschikbaar</span>
+                                                {% endif %}
+                                                <p>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    {% endfor %}
                                 </div>
-                            {% endfor %}
-                        </div>
-                        <script>
+                                <script>
     document.addEventListener("DOMContentLoaded", function() {
         // Find the selected element based on the current_week variable from your backend
         const currentWeek = {{ current_week }};
@@ -164,73 +170,73 @@
             });
         }
     });
-                        </script>
-                    </div>
-                    <div>
-                        <label for="voucher" class="mb-2 block text-sm font-medium text-gray-900">
-                            Enter a gift card, voucher or promotional code
-                        </label>
-                        <div class="flex max-w-md items-center gap-4">
-                            <input type="text"
-                                   id="voucher"
-                                   class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
-                                   placeholder=""
-                                   required />
-                            <button type="button"
-                                    class="flex items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
-                                Apply
-                            </button>
+                                </script>
+                            </div>
+                            <div>
+                                <label for="voucher" class="mb-2 block text-sm font-medium text-gray-900">
+                                    Enter a gift card, voucher or promotional code
+                                </label>
+                                <div class="flex max-w-md items-center gap-4">
+                                    <input type="text"
+                                           id="voucher"
+                                           class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
+                                           placeholder=""
+                                           required />
+                                    <button type="button"
+                                            class="flex items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
+                                        Apply
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="mt-6 w-full space-y-6 sm:mt-8 lg:mt-0 lg:max-w-xs xl:max-w-md">
-                    <div class="flow-root">
-                        <div class="-my-3 divide-y divide-gray-200">
-                            <dl class="flex items-center justify-between gap-4 py-3">
-                                <dt class="text-base font-normal text-gray-500">Subtotal</dt>
-                                <dd class="text-base font-medium text-gray-900">
-                                    $8,094.00
-                                </dd>
-                            </dl>
-                            <dl class="flex items-center justify-between gap-4 py-3">
-                                <dt class="text-base font-normal text-gray-500">Savings</dt>
-                                <dd class="text-base font-medium text-green-500">
-                                    0
-                                </dd>
-                            </dl>
-                            <dl class="flex items-center justify-between gap-4 py-3">
-                                <dt class="text-base font-normal text-gray-500">Store Pickup</dt>
-                                <dd class="text-base font-medium text-gray-900">
-                                    $99
-                                </dd>
-                            </dl>
-                            <dl class="flex items-center justify-between gap-4 py-3">
-                                <dt class="text-base font-normal text-gray-500">Tax</dt>
-                                <dd class="text-base font-medium text-gray-900">
-                                    $199
-                                </dd>
-                            </dl>
-                            <dl class="flex items-center justify-between gap-4 py-3">
-                                <dt class="text-base font-bold text-gray-900">Total</dt>
-                                <dd class="text-base font-bold text-gray-900">
-                                    $8,392.00
-                                </dd>
-                            </dl>
-                        </div>
-                    </div>
-                    <div class="space-y-3">
-                        <button type="submit"
-                                class="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300">
-                            Proceed to Payment
-                        </button>
-                        <p class="text-sm font-normal text-gray-500">
-                            One or more items in your cart require an account. <a href="#"
+                        <div class="mt-6 w-full space-y-6 sm:mt-8 lg:mt-0 lg:max-w-xs xl:max-w-md">
+                            <div class="flow-root">
+                                <div class="-my-3 divide-y divide-gray-200">
+                                    <dl class="flex items-center justify-between gap-4 py-3">
+                                        <dt class="text-base font-normal text-gray-500">Subtotal</dt>
+                                        <dd class="text-base font-medium text-gray-900">
+                                            $8,094.00
+                                        </dd>
+                                    </dl>
+                                    <dl class="flex items-center justify-between gap-4 py-3">
+                                        <dt class="text-base font-normal text-gray-500">Savings</dt>
+                                        <dd class="text-base font-medium text-green-500">
+                                            0
+                                        </dd>
+                                    </dl>
+                                    <dl class="flex items-center justify-between gap-4 py-3">
+                                        <dt class="text-base font-normal text-gray-500">Store Pickup</dt>
+                                        <dd class="text-base font-medium text-gray-900">
+                                            $99
+                                        </dd>
+                                    </dl>
+                                    <dl class="flex items-center justify-between gap-4 py-3">
+                                        <dt class="text-base font-normal text-gray-500">Tax</dt>
+                                        <dd class="text-base font-medium text-gray-900">
+                                            $199
+                                        </dd>
+                                    </dl>
+                                    <dl class="flex items-center justify-between gap-4 py-3">
+                                        <dt class="text-base font-bold text-gray-900">Total</dt>
+                                        <dd class="text-base font-bold text-gray-900">
+                                            $8,392.00
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="space-y-3">
+                                <button type="submit"
+                                        class="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300">
+                                    Proceed to Payment
+                                </button>
+                                <p class="text-sm font-normal text-gray-500">
+                                    One or more items in your cart require an account. <a href="#"
     title=""
     class="font-medium text-primary-700 underline hover:no-underline">Sign in or create an account now.</a>.
-                        </p>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-{% endblock %}
+            </section>
+        {% endblock %}

@@ -28,12 +28,13 @@ def dashboard():
 def boeken(huisId):
     form = RegistrationForm()
     huis = Huisje.query.filter_by(id=huisId).first()
+    volgeboekt_op = [geboekt.weeknummer for geboekt in huis.boeking_id]
     
     now = datetime.now()
     current_week = int(now.strftime("%W")) + 1
     current_year = int(now.strftime("%Y"))
 
-    return render_template("boeken.html", form=form, huis=huis, current_year = current_year, current_week=current_week)
+    return render_template("boeken.html", form=form, volgeboekt_op=volgeboekt_op, huis=huis, current_year = current_year, current_week=current_week)
 
 @app.route("/logout")
 @login_required
